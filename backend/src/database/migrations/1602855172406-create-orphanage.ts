@@ -1,4 +1,5 @@
-import {MigrationInterface, QueryRunner, Table} from "typeorm";
+import {MigrationInterface, QueryRunner, Table} from "typeorm"
+
 
 export class createOrphanage1602855172406 implements MigrationInterface {
 
