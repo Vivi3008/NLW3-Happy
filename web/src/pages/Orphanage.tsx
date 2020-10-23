@@ -1,25 +1,61 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { FaWhatsapp } from "react-icons/fa";
 import { FiClock, FiInfo } from "react-icons/fi";
 import { Map, Marker, TileLayer } from "react-leaflet";
+import { useParams } from 'react-router-dom'
 
 import Sidebar from '../components/sidebar'
 
 import '../styles/pages/orphanage.css';
-
+import api from '../services/api'
 
 import mapIcon from '../utils/mapIcon'
 
-export default function Orphanage() {
-  
+interface Orphanage {
+  name: string;
+  latitude: number;
+  longitude: number;
+  about: string;
+  instructions: string;
+  openin_hours: string;
+  open_on_wekeends: boolean;
+  images: Array<{
+    url: string;
+  }>
+}
 
+interface OrphanageParams {
+  id: string;
+}
+
+
+export default function Orphanage() {
+  const params  = useParams<OrphanageParams>() 
+  const [orphanage, setOrphanage] = useState<Orphanage>()
+  
+  console.log(orphanage)
+  useEffect(()=>{
+    api.get(`/orphanages/${params.id}`)
+    .then( response => {
+      setOrphanage(response.data)
+    })
+   .catch((error)=> console.log('Ocorreu um erro na requisição', error))
+    
+    },[params.id])
+ 
+  
+  if (!Orphanage){
+    return <p>Carregando...</p>
+  }
+
+  console.log(orphanage)
   return (
     <div id="page-orphanage">
      <Sidebar/>
 
       <main>
         <div className="orphanage-details">
-          <img src="https://www.gcd.com.br/wp-content/uploads/2020/08/safe_image.jpg" alt="Lar das meninas" />
+          <img src={orphanage?.images[0].url} alt={`Foto de ${orphanage?.name}`}/>
 
           <div className="images">
             <button className="active" type="button">
@@ -43,12 +79,12 @@ export default function Orphanage() {
           </div>
           
           <div className="orphanage-details-content">
-            <h1>Lar das meninas</h1>
-            <p>Presta assistência a crianças de 06 a 15 anos que se encontre em situação de risco e/ou vulnerabilidade social.</p>
+            <h1>{orphanage?.name}</h1>
+            <p>{orphanage?.about}</p>
 
             <div className="map-container">
-              <Map 
-                center={[-27.2092052,-49.6401092]} 
+             {/*  <Map 
+                center={[orphanage?.latitude, orphanage?.longitude]}
                 zoom={16} 
                 style={{ width: '100%', height: 280 }}
                 dragging={false}
@@ -60,8 +96,8 @@ export default function Orphanage() {
                 <TileLayer 
                   url={`https://a.tile.openstreetmap.org/{z}/{x}/{y}.png`}
                 />
-                <Marker interactive={false} icon={mapIcon} position={[-27.2092052,-49.6401092]} />
-              </Map>
+                <Marker interactive={false} icon={mapIcon} position={[orphanage?.latitude, orphanage?.longitude]} />
+              </Map> */}
 
               <footer>
                 <a href="">Ver rotas no Google Maps</a>
