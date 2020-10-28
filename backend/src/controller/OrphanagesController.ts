@@ -33,7 +33,7 @@ export default {
                 about,
                 instructions,
                 opening_hours,
-                open_on_wekeends,
+                open_on_wekeends: open_on_wekeends === "true",
                 images
             }
 
