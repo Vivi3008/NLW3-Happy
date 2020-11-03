@@ -1,9 +1,10 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet'
 
-import api from "../services/api";
+
+import api from "../services/api"
 import { FiPlus } from "react-icons/fi";
 
 import Sidebar from "../components/sidebar";
@@ -25,13 +26,12 @@ export default function CreateOrphanage() {
   const [ images, setImages ] = useState<File[]>([])
   const [ previewImages, setPreviewImages ] = useState<string[]>([])
 
-
   function handleMapClick(event: LeafletMouseEvent){
     const { lat, lng } = event.latlng
     setPosition({ latitude: lat, longitude: lng })
   }
 
-  async function handleSubmit(event: FormEvent){
+  async function OnSubmit(event: FormEvent){
       event.preventDefault()
 
       const { latitude, longitude } = position
@@ -50,6 +50,8 @@ export default function CreateOrphanage() {
         data.append('images', image)
       })
 
+      console.log(data)
+
      try {
       await api.post("/orphanages", data)
 
@@ -59,6 +61,7 @@ export default function CreateOrphanage() {
        
      } catch (error) {
        alert("Erro ao cadastrar!")
+       console.error(error)
      }
       
   }
@@ -82,7 +85,7 @@ export default function CreateOrphanage() {
       <Sidebar/>
 
       <main>
-        <form className="create-orphanage-form" onSubmit={handleSubmit}>
+        <form className="create-orphanage-form" onSubmit={OnSubmit}>
           <fieldset>
             <legend>Dados</legend>
 
@@ -97,18 +100,14 @@ export default function CreateOrphanage() {
               />
 
               { position.latitude !== 0 &&
-               <Marker 
+              <Marker 
                interactive={false} 
                icon={mapIcon} 
                position={[
                  position.latitude,
                  position.longitude
-                ]}
-                /> 
-             
-              }
-
-             
+                ]} />
+              }  
             </Map>
 
             <div className="input-block">
@@ -122,10 +121,10 @@ export default function CreateOrphanage() {
             <div className="input-block">
               <label htmlFor="about">Sobre <span>Máximo de 300 caracteres</span></label>
               <textarea id="name" 
-              maxLength={300}
-              value={about}
-              onChange={event=> setAbout(event.target.value)}
-               />
+                maxLength={300}
+                value={about}
+                onChange={event=> setAbout(event.target.value)}
+              />
             </div>
 
             <div className="input-block">
