@@ -60,10 +60,8 @@ export default {
             
             await orphanagesRepository.save(orphanage)
         
-        
           return res.status(201).json(orphanage)
       
-        
     },
 
     async index(req:Request, res:Response){
