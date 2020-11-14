@@ -1,10 +1,10 @@
-![](/home/viviane/Documentos/www/NLW3-Happy/Logo.png)
+![](Logo.png)
 
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/vivi3008/NLW3-Happy)![GitHub language count](https://img.shields.io/github/languages/count/vivi3008/NLW3-Happy)![GitHub top language](https://img.shields.io/github/languages/top/vivi3008/NLW3-Happy)![GitHub last commit](https://img.shields.io/github/last-commit/vivi3008/NLW3-Happy)
 
 Happy é uma aplicação que conecta pessoas a orfanatos ou casas de acolhimento para fazerem visitas ou doações.
 
-![](/home/viviane/Documentos/www/NLW3-Happy/happy.png)
+![](happy.png)
 
 ## 🖥️Sobre
 
